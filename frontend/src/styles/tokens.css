@@ -1,0 +1,68 @@
+/* ============================================================
+   Núcleo Kokón — Design tokens
+   Fuente de verdad: docs/referencias/login.html
+   (prototipo de login aprobado). No modificar sin contrastar
+   contra esa referencia.
+   ============================================================ */
+
+:root {
+  /* ---- Superficies ---- */
+  --bg-left: #553b46;   /* Panel de marca: vino / plomo */
+  --bg-right: #fcf9f5;  /* Panel de formulario: crema */
+  --input-bg: #ffffff;
+
+  /* ---- Acción ---- */
+  --primary-color: #1a8f82;
+  --primary-hover: #146e66;
+
+  /* ---- Texto ---- */
+  --text-dark: #2c2c2c;
+  --text-muted: #666666;
+  --text-faint: #999999;
+  --text-icon: #a0a0a0;
+
+  /* ---- Bordes ---- */
+  --border-color: #e0e0e0;
+
+  /* ---- Estados ----
+     Rojo genérico descartado: el tono de error se deriva de la
+     paleta cálida de la marca (#553b46 → terracota), coherente con
+     el token --danger del manual de marca. */
+  --error: #a4483a;
+  --error-pale: #fbeee9;
+  --error-border: rgba(164, 72, 58, 0.28);
+
+  /* ---- Geometría ---- */
+  --radius-input: 8px;
+  --radius-pill: 50px;
+
+  /* ---- Tipografía ---- */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+
+  /* ---- Movimiento ---- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 0.2s;
+  --dur-base: 0.3s;
+
+  /* ------------------------------------------------------------
+     Tokens del shell interno (Fase 2)
+     Provienen de docs/referencias/nucleo-kokon-app.html, whose
+     paleta (Montserrat / --mauve #6B4F5A) aún NO ha sido
+     reconciliada con la del login. No usar hasta que se decida.
+     ------------------------------------------------------------ */
+  --mauve: #6b4f5a;
+  --mauve-dark: #4a3340;
+  --mauve-light: #9c7a88;
+  --mauve-pale: #f0e8ec;
+  --teal: #1a8c8a;
+  --teal-dark: #0f5e5d;
+  --teal-light: #b1cccb;
+  --teal-pale: #e8f4f4;
+  --blush: #c49a8a;
+  --amber: #d4956a;
+  --cream: #f7f2ee;
+  --cream-dark: #ede5de;
+  --white: #ffffff;
+  --mid: #4a3d40;
+}

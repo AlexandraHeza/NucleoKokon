@@ -1,0 +1,111 @@
+/* ============================================================
+   FormField — login.html
+   ============================================================ */
+
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.field-control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field-icon {
+  position: absolute;
+  left: 1rem;
+  width: 18px;
+  height: 18px;
+  color: var(--text-icon);
+  display: flex;
+  align-items: center;
+  transition: color var(--dur-fast) var(--ease);
+  pointer-events: none;
+}
+
+.field-input {
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 2.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-input);
+  background-color: var(--input-bg);
+  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: all var(--dur-base) var(--ease);
+}
+
+.field-input::placeholder {
+  color: var(--text-icon);
+}
+
+.field-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(26, 143, 130, 0.1);
+}
+
+.field-control:focus-within .field-icon {
+  color: var(--primary-color);
+}
+
+.field-input.has-trailing {
+  padding-right: 3rem;
+}
+
+.field-trailing {
+  position: absolute;
+  right: 0.8rem;
+  display: flex;
+  align-items: center;
+}
+
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+.field--error .field-input {
+  border-color: var(--error);
+}
+
+.field--error .field-input:focus {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px var(--error-border);
+}
+
+.field--error .field-icon {
+  color: var(--error);
+}
+
+.field-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--error);
+  margin-top: 0.45rem;
+  line-height: 1.5;
+}
+
+.field-error svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  width: 14px;
+  height: 14px;
+}
+
+.field-input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

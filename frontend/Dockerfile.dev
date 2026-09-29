@@ -1,0 +1,15 @@
+# Imagen de desarrollo del frontend: Vite con hot-reload.
+FROM node:20-slim
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends tini ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+ENV NODE_ENV=development
+
+EXPOSE 5173
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

@@ -1,0 +1,43 @@
+/* ============================================================
+   Logo — círculo con la N + wordmark de dos líneas
+   (docs/referencias/login.html)
+   ============================================================ */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.logo-link {
+  display: inline-flex;
+  text-decoration: none;
+}
+
+.logo-circle {
+  width: 35px;
+  height: 35px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  color: inherit;
+}
+
+.logo-text strong {
+  font-weight: 700;
+}

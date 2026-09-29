@@ -1,0 +1,51 @@
+/* ============================================================
+   Páginas internas — estilos provisionales.
+   La Fase 2 reemplaza DashboardPage por el shell de la app.
+   ============================================================ */
+
+.page {
+  padding: 4rem 2.5rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.page-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.page-title {
+  font-size: 2.2rem;
+  font-weight: 400;
+  margin: 0.5rem 0;
+  color: var(--text-dark);
+}
+
+.page-title strong {
+  font-weight: 700;
+}
+
+.page-sub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-top: 1rem;
+}
+
+.page-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.85rem 2rem;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border-radius: var(--radius-pill);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background-color var(--dur-base) var(--ease);
+}
+
+.page-link:hover {
+  background-color: var(--primary-hover);
+}

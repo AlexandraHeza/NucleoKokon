@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi espacio — Núcleo Kokón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --mauve:       #6B4F5A;
+  --mauve-dark:  #4A3340;
+  --mauve-light: #9C7A88;
+  --mauve-pale:  #F0E8EC;
+  --teal:        #1A8C8A;
+  --teal-dark:   #0F5E5D;
+  --teal-light:  #B1CCCB;
+  --teal-pale:   #E8F4F4;
+  --blush:       #C49A8A;
+  --amber:       #D4956A;
+  --cream:       #F7F2EE;
+  --cream-dark:  #EDE5DE;
+  --white:       #FFFFFF;
+  --dark:        #1E1818;
+  --mid:         #4A3D40;
+  --muted:       #8A7A80;
+  --border:      rgba(107,79,90,0.14);
+  --shadow-sm:   0 2px 12px rgba(107,79,90,0.10);
+  --shadow-md:   0 6px 32px rgba(107,79,90,0.14);
+  --radius:      20px;
+  --radius-sm:   14px;
+
+  /* Semáforo metodológico — derivado de la paleta de marca, no colores genéricos */
+  --sem-atencion:      #B65B45;
+  --sem-construccion:  var(--amber);
+  --sem-sostenimiento: var(--teal);
+  --sem-autonomia:     var(--mauve-dark);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+ul { list-style: none; }
+
+/* ============================================
+   APP SHELL
+   ============================================ */
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+}
+
+/* ============================================
+   SIDEBAR — mismo lenguaje visual del hero/login
+   ============================================ */
+.sidebar {
+  background: var(--mauve);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 20px;
+}
+.sidebar-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.sidebar-bg-circle:nth-child(1) { top: -30%; right: -40%; width: 70vw; max-width: 420px; height: 70vw; max-height: 420px; border: 1px solid rgba(177,204,203,0.10); }
+.sidebar-bg-circle:nth-child(2) { bottom: -25%; left: -35%; width: 60vw; max-width: 360px; height: 60vw; max-height: 360px; border: 1px solid rgba(177,204,203,0.08); }
+
+.sidebar-logo {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; gap: 10px;
+  padding: 4px 8px 28px;
+}
+.sidebar-logo .logo-icon { height: 34px; width: auto; color: #FFFFFF; }
+.sidebar-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.sidebar-logo-nucleo { font-size: 8.5px; font-weight: 400; color: rgba(255,255,255,0.55); letter-spacing: 0.14em; text-transform: uppercase; }
+.sidebar-logo-kokon { font-size: 15px; font-weight: 700; color: var(--white); letter-spacing: 0.18em; text-transform: uppercase; }
+
+.sidebar-nav { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.sidebar-link {
+  display: flex; align-items: center; gap: 11px;
+  padding: 10px 12px; border-radius: 12px;
+  font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.68);
+  transition: all 0.18s;
+  border: none; background: none; width: 100%; text-align: left;
+}
+.sidebar-link svg { flex-shrink: 0; opacity: 0.85; }
+.sidebar-link:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.9); }
+.sidebar-link.active {
+  background: var(--teal);
+  color: var(--white);
+  box-shadow: 0 4px 14px rgba(15,94,93,0.35);
+}
+.sidebar-link.active svg { opacity: 1; }
+
+.sidebar-cycle {
+  position: relative; z-index: 2;
+  background: rgba(255,255,255,0.07);
+  border: 0.5px solid rgba(255,255,255,0.14);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-top: 16px;
+}
+.sidebar-cycle-label { font-size: 9.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light); }
+.sidebar-cycle-name { font-size: 15px; font-weight: 300; color: var(--white); margin: 4px 0 10px; }
+.sidebar-cycle-name strong { font-weight: 700; }
+.cycle-track { display: flex; gap: 4px; }
+.cycle-track span { height: 4px; flex: 1; border-radius: 4px; background: rgba(255,255,255,0.18); }
+.cycle-track span.done { background: var(--teal-light); opacity: 0.55; }
+.cycle-track span.current { background: var(--teal-light); opacity: 1; }
+
+/* ============================================
+   MAIN
+   ============================================ */
+.main { display: flex; flex-direction: column; min-width: 0; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 36px;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--cream);
+}
+.topbar-greet-eyebrow { font-size: 11px; color: var(--muted); font-weight: 500; }
+.topbar-greet-name { font-family: inherit; font-size: 22px; font-weight: 300; color: var(--dark); }
+.topbar-greet-name strong { font-weight: 700; }
+.topbar-actions { display: flex; align-items: center; gap: 14px; }
+.icon-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--white); border: 1px solid var(--border); color: var(--mid);
+  position: relative;
+}
+.icon-btn .dot { position: absolute; top: 8px; right: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--sem-atencion); }
+.avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--teal); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+}
+
+.content { flex: 1; padding: 32px 36px 60px; overflow-y: auto; }
+.view { display: none; max-width: 980px; }
+.view.active { display: block; animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+.view-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-dark); margin-bottom: 8px; }
+.view-title { font-size: 28px; font-weight: 300; color: var(--dark); margin-bottom: 6px; }
+.view-title strong { font-weight: 700; }
+.view-sub { font-size: 13.5px; color: var(--muted); margin-bottom: 26px; max-width: 560px; }
+
+/* ============================================
+   CARDS & GRID
+   ============================================ */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+}
+.card + .card { margin-top: 18px; }
+.card-head { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+.card-head svg { color: var(--teal); }
+.card-head span { font-size: 13px; font-weight: 600; color: var(--mid); }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.grid-2 .card { margin-top: 0; }
+
+/* ---- Check-in ---- */
+.checkin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.checkin-field { background: var(--cream); border-radius: var(--radius-sm); padding: 12px; }
+.checkin-field-label { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+.checkin-options { display: flex; gap: 6px; }
+.checkin-opt {
+  flex: 1; padding: 7px 4px; border-radius: 10px; font-size: 11px;
+  text-align: center; text-transform: capitalize;
+  background: var(--white); border: 1px solid var(--border); color: var(--mid);
+  transition: all 0.15s;
+}
+.checkin-opt.selected { background: var(--teal); border-color: var(--teal); color: var(--white); }
+
+/* ---- listas ---- */
+.list-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; font-size: 13.5px; border-bottom: 1px solid var(--cream-dark); }
+.list-row:last-child { border-bottom: none; }
+.list-row .time { color: var(--muted); font-size: 12px; }
+.habit-row { display: flex; align-items: center; gap: 9px; padding: 7px 0; font-size: 13.5px; }
+.habit-check { width: 17px; height: 17px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; transition: all 0.15s; }
+.habit-check.done { background: var(--teal); border-color: var(--teal); }
+.habit-check svg { opacity: 0; transform: scale(0.6); transition: all 0.15s; }
+.habit-check.done svg { opacity: 1; transform: scale(1); }
+
+/* ---- recomendación NKI ---- */
+.reco-card { background: var(--mauve-pale); border: 1px solid rgba(107,79,90,0.16); }
+.reco-card .card-head svg { color: var(--amber); }
+.reco-card p { font-size: 13.5px; color: var(--mid); }
+
+/* ---- Bitácora ---- */
+.timeline { position: relative; padding-left: 26px; }
+.timeline::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 1px; background: var(--border); }
+.timeline-item { position: relative; margin-bottom: 18px; }
+.timeline-dot { position: absolute; left: -26px; top: 22px; width: 13px; height: 13px; border-radius: 50%; background: var(--cream); border: 2px solid var(--teal); }
+.timeline-item .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.timeline-item .tema { font-size: 16px; font-weight: 600; color: var(--mauve-dark); }
+.timeline-item .fecha { font-size: 11.5px; color: var(--muted); }
+.timeline-item p { font-size: 13.5px; margin-bottom: 4px; }
+.timeline-item p span { color: var(--muted); }
+
+/* ---- Progreso / semáforo ---- */
+.progreso-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; align-items: flex-start; }
+.pill { font-size: 10.5px; font-weight: 600; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.03em; }
+.dim-card { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; margin-bottom: 10px; }
+.dim-card .dim-name { display: flex; align-items: center; gap: 8px; font-size: 13.5px; }
+
+/* ---- Herramientas ---- */
+.tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.tool-card { position: relative; }
+.tool-card.locked { opacity: 0.62; }
+.tool-name { font-size: 16px; font-weight: 600; color: var(--mauve-dark); margin-bottom: 4px; }
+.tool-crit { font-size: 12px; color: var(--muted); }
+.tool-status { position: absolute; top: 20px; right: 20px; color: var(--muted); }
+.tool-status.unlocked { color: var(--teal); }
+
+/* ---- placeholder ---- */
+.placeholder-card p { font-size: 13.5px; color: var(--muted); }
+
+/* ============================================
+   MOBILE
+   ============================================ */
+.mobile-topbar { display: none; }
+@media (max-width: 900px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed; inset: 0 auto 0 0; width: 260px; z-index: 200;
+    transform: translateX(-100%); transition: transform 0.25s ease;
+  }
+  .sidebar.open { transform: translateX(0); box-shadow: var(--shadow-md); }
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(30,24,24,0.35); z-index: 150; }
+  .sidebar-overlay.show { display: block; }
+  .mobile-topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; background: var(--mauve); position: sticky; top: 0; z-index: 100;
+  }
+  .mobile-topbar .logo-icon { height: 26px; color: var(--white); }
+  .mobile-menu-btn { background: none; border: none; color: var(--white); }
+  .topbar { padding: 18px 20px; }
+  .content { padding: 22px 20px 50px; }
+  .grid-2, .progreso-grid, .tool-grid, .checkin-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Barra superior visible solo en móvil -->
+<div class="mobile-topbar">
+  <svg class="logo-icon" viewBox="0 0 256 256" width="26"><path fill="currentColor" d="M34.4,109.6C40.4,82,55.7,61.8,80.3,48.8c11.7-6.2,23.6-12.2,37-14.6c45.4-8,90.3,21.6,99,67.5c5.5,29.3,1.5,57-17.9,80.6c-19.8,24.2-45.5,35.9-77,33c-25.3-2.3-48.2-10.5-65.6-30C36.6,163.9,29.2,138.7,34.4,109.6z M131.5,201.8c33.9,0.2,68.4-31.6,73.5-68.7c4.2-30.6-15.8-63.3-46.6-77.9c-28.9-13.7-56-6.8-77.2,17.4c-16,18.3-20.7,41.3-17.2,63.9C68.9,175.9,101.7,201.9,131.5,201.8z"/></svg>
+  <button class="mobile-menu-btn" id="mobileMenuBtn">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="app-shell">
+
+  <!-- ============================================
+       SIDEBAR
+       ============================================ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-bg-circle"></div>
+    <div class="sidebar-bg-circle"></div>
+
+    <a href="index.html" class="sidebar-logo">
+      <svg class="logo-icon" viewBox="0 0 256 256">
+        <path fill="currentColor" d="M34.433586,109.645660C40.360970,81.962395 55.720947,61.815849 80.268120,48.814724C92.017723,42.591682 103.865326,36.596252 117.266800,34.240921C162.716217,26.253088 207.610580,55.849659 216.310028,101.780022C221.850906,131.034180 217.837601,158.729202 198.471283,182.397369C178.711426,206.546494 152.982208,218.220535 121.530777,215.365402C96.262802,213.071625 73.307434,204.913330 55.900948,185.456711C36.630444,163.916565 29.174475,138.725327 34.433586,109.645660M131.523590,201.813156C136.853348,201.826202 142.165100,201.798065 147.424911,200.640137C157.910278,198.331848 168.621109,195.806396 176.621506,188.460983C196.236511,170.451813 205.371475,147.991364 203.916214,121.057617C201.911194,83.948776 174.333405,52.807316 139.652542,44.722061C110.759270,37.986084 86.258530,45.821457 67.222603,68.056595C51.956097,85.888824 47.052204,107.366074 50.112091,130.719025C55.219711,169.700165 89.682587,201.582870 131.523590,201.813156z"/>
+        <path fill="currentColor" d="M128.092987,182.224152C123.005585,184.806976 118.121674,186.873871 113.025696,188.504990C110.038834,189.461044 108.282166,188.490494 106.864571,185.984726C103.909538,180.761353 102.824387,175.040680 102.803055,169.180786C102.707283,142.869568 102.725243,116.557724 102.787727,90.246307C102.809723,80.983879 107.918129,74.049789 116.672745,70.974388C117.770599,70.588730 118.883797,70.236015 120.009155,69.941711C122.172226,69.376038 123.180138,67.968018 122.520256,65.864410C121.861534,63.764481 120.163208,64.661240 118.743240,64.977623C111.527176,66.585442 104.200279,66.454819 96.880463,66.292137C94.828941,66.246552 91.895721,66.747856 92.088043,63.525749C92.262383,60.605022 94.934692,61.480888 96.837166,61.560165C106.000984,61.942039 115.091805,61.726467 124.145576,59.821316C129.111664,58.776321 133.287918,56.072903 138.119308,53.915268C138.855057,56.962055 136.184296,57.418648 135.193954,58.998669C144.671051,62.770725 154.125977,64.725754 164.073471,60.606541C158.679611,65.782478 152.185501,66.579788 145.379852,65.756271C141.265152,65.258377 137.237793,64.040039 133.123276,63.538849C130.751633,63.249958 127.799904,62.983997 127.250854,66.523750C126.700363,70.072708 129.798538,69.889832 131.827133,70.536438C142.049194,73.794701 146.629639,79.449539 147.290604,90.059380C147.551239,94.242943 149.364868,97.760719 151.763992,100.985001C157.694702,108.955544 158.870804,117.658203 155.984390,126.997108C153.603073,134.701782 152.570267,142.715942 152.630219,150.616165C152.714966,161.786118 146.809982,169.020340 138.913528,175.321442C135.682083,177.900009 131.941025,179.839935 128.092987,182.224152z"/>
+      </svg>
+      <div class="sidebar-logo-text">
+        <span class="sidebar-logo-nucleo">Núcleo</span>
+        <span class="sidebar-logo-kokon">Kokón</span>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <button class="sidebar-link active" data-view="hoy">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+        Inicio / Hoy
+      </button>
+      <button class="sidebar-link" data-view="bitacora">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Bitácora
+      </button>
+      <button class="sidebar-link" data-view="progreso">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        Progreso
+      </button>
+      <button class="sidebar-link" data-view="herramientas">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        Herramientas
+      </button>
+      <button class="sidebar-link" data-view="materiales">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/></svg>
+        Materiales
+      </button>
+      <button class="sidebar-link" data-view="acompanamiento">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Acompañamiento
+      </button>
+      <button class="sidebar-link" data-view="comunidad">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        Comunidad
+      </button>
+      <button class="sidebar-link" data-view="nki">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg>
+        NK Intelligence
+      </button>
+    </nav>
+
+    <div class="sidebar-cycle">
+      <div class="sidebar-cycle-label">Ciclo actual</div>
+      <div class="sidebar-cycle-name">II · <strong>Estabilizar</strong></div>
+      <div class="cycle-track">
+        <span class="done"></span>
+        <span class="current"></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================================
+       MAIN
+       ============================================ -->
+  <div class="main">
+    <header class="topbar">
+      <div>
+        <div class="topbar-greet-eyebrow">Hola,</div>
+        <div class="topbar-greet-name"><strong>Renata</strong></div>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn"><span class="dot"></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+        <div class="avatar">R</div>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- ============================================ INICIO / HOY ============================================ -->
+      <section class="view active" id="view-hoy">
+        <span class="view-eyebrow">Tu día</span>
+        <h1 class="view-title">Inicio</h1>
+        <p class="view-sub">¿Qué necesitas saber y hacer hoy para sostener tu sistema?</p>
+
+        <div class="card">
+          <div class="card-head">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Check-in diario</span>
+          </div>
+          <div class="checkin-grid">
+            <div class="checkin-field">
+              <div class="checkin-field-label">Estado emocional</div>
+              <div class="checkin-options" data-group="emocional">
+                <button class="checkin-opt" data-val="bajo">bajo</button>
+                <button class="checkin-opt" data-val="medio">medio</button>
+                <button class="checkin-opt" data-val="alto">alto</button>
+              </div>
+            </div>
+            <div class="checkin-field">
+              <div class="checkin-field-label">Energía</div>
+              <div class="checkin-options" data-group="energia">
+                <button class="checkin-opt" data-val="bajo">bajo</button>
+                <button class="checkin-opt" data-val="medio">medio</button>
+                <button class="checkin-opt" data-val="alto">alto</button>
+              </div>
+            </div>
+            <div class="checkin-field">
+              <div class="checkin-field-label">Estado corporal</div>
+              <div class="checkin-options" data-group="corporal">
+                <button class="checkin-opt" data-val="tenso">tenso</button>
+                <button class="checkin-opt" data-val="neutro">neutro</button>
+                <button class="checkin-opt" data-val="ligero">ligero</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:18px;">
+          <div class="card">
+            <div class="card-head">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>Agenda de hoy</span>
+            </div>
+            <div class="list-row"><span>Bloque de trabajo — propuesta cliente</span><span class="time">09:30</span></div>
+            <div class="list-row"><span>Pausa corporal (10 min)</span><span class="time">11:15</span></div>
+            <div class="list-row"><span>Sesión de mentoría</span><span class="time">17:00</span></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              <span>Hábitos de hoy</span>
+            </div>
+            <div class="habit-row"><span class="habit-check done"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></span> Dormir 7+ horas</div>
+            <div class="habit-row"><span class="habit-check"></span> Registro de gastos</div>
+            <div class="habit-row"><span class="habit-check"></span> Pausa sin pantallas</div>
+          </div>
+        </div>
+
+        <div class="card reco-card" style="margin-top:18px;">
+          <div class="card-head">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/></svg>
+            <span>Recomendación de NK Intelligence</span>
+          </div>
+          <p>Tu dimensión Biológica está en atención desde hace 5 días. Antes de sumar una tarea nueva, te sugerimos proteger tu bloque de sueño esta noche.</p>
+        </div>
+      </section>
+
+      <!-- ============================================ BITÁCORA ============================================ -->
+      <section class="view" id="view-bitacora">
+        <span class="view-eyebrow">Memoria del proceso</span>
+        <h1 class="view-title">Bitácora</h1>
+        <p class="view-sub">Registro longitudinal del acompañamiento: sesiones, avances, bloqueos y decisiones.</p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="card">
+              <div class="card-top">
+                <span class="tema">Sobrecarga de tareas administrativas</span>
+                <span class="fecha">12 ago</span>
+              </div>
+              <p><span>Llegada: </span>Llegó cansada, con la agenda saturada</p>
+              <p><span>Avance: </span>Registró por primera vez su calendario real vs. planeado</p>
+              <p><span>Próxima sesión: </span>Observar patrón de sueño 5 días</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="card">
+              <div class="card-top">
+                <span class="tema">Diagnóstico psico-operativo inicial</span>
+                <span class="fecha">5 ago</span>
+              </div>
+              <p><span>Llegada: </span>Llegó con claridad sobre su proyecto, pero dispersa en el día a día</p>
+              <p><span>Avance: </span>Se construyó el Mapa de Sostenibilidad Individual</p>
+              <p><span>Próxima sesión: </span>Priorizar 3 hábitos biológicos mínimos</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ PROGRESO ============================================ -->
+      <section class="view" id="view-progreso">
+        <span class="view-eyebrow">Índice de Sostenibilidad</span>
+        <h1 class="view-title">Progreso</h1>
+        <p class="view-sub">No es una racha de días: es la evolución de tu sistema, dimensión por dimensión.</p>
+
+        <div class="progreso-grid">
+          <div class="card">
+            <div class="card-head"><span>Maslow Operativo</span></div>
+            <svg id="radarSvg" viewBox="0 0 320 300" width="100%" height="300"></svg>
+          </div>
+          <div>
+            <div class="card dim-card">
+              <span class="dim-name">🫁 Biológico</span>
+              <span class="pill" style="background:#F3E2DC;color:var(--sem-atencion);">Atención</span>
+            </div>
+            <div class="card dim-card">
+              <span class="dim-name">🛡 Seguridad</span>
+              <span class="pill" style="background:#FBEEDF;color:var(--sem-construccion);">Construcción</span>
+            </div>
+            <div class="card dim-card">
+              <span class="dim-name">🤝 Vinculación</span>
+              <span class="pill" style="background:#FBEEDF;color:var(--sem-construccion);">Construcción</span>
+            </div>
+            <div class="card dim-card">
+              <span class="dim-name">🧠 Operatividad</span>
+              <span class="pill" style="background:#F3E2DC;color:var(--sem-atencion);">Atención</span>
+            </div>
+            <div class="card dim-card">
+              <span class="dim-name">🚀 Autorrealización</span>
+              <span class="pill" style="background:var(--teal-pale);color:var(--sem-sostenimiento);">Sostenimiento</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ HERRAMIENTAS ============================================ -->
+      <section class="view" id="view-herramientas">
+        <span class="view-eyebrow">Andamiaje pedagógico</span>
+        <h1 class="view-title">Herramientas</h1>
+        <p class="view-sub">No se entrega todo desde el inicio: se desbloquea según el diagnóstico y la evolución.</p>
+
+        <div class="tool-grid">
+          <div class="card tool-card">
+            <div class="tool-name">Calendario</div>
+            <div class="tool-crit">Dificultad para visualizar compromisos</div>
+            <span class="tool-status unlocked"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span>
+          </div>
+          <div class="card tool-card">
+            <div class="tool-name">Recordatorios</div>
+            <div class="tool-crit">Descarga de carga mental</div>
+            <span class="tool-status unlocked"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span>
+          </div>
+          <div class="card tool-card locked">
+            <div class="tool-name">Pomodoro</div>
+            <div class="tool-crit">Dificultad para iniciar tareas</div>
+            <span class="tool-status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          </div>
+          <div class="card tool-card locked">
+            <div class="tool-name">Matriz 20/80</div>
+            <div class="tool-crit">Exceso de actividades con poco impacto</div>
+            <span class="tool-status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          </div>
+          <div class="card tool-card locked">
+            <div class="tool-name">Planeación semanal</div>
+            <div class="tool-crit">Se habilita en Ciclo III · Estructurar</div>
+            <span class="tool-status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          </div>
+          <div class="card tool-card locked">
+            <div class="tool-name">Gestión por proyectos</div>
+            <div class="tool-crit">Múltiples proyectos compitiendo</div>
+            <span class="tool-status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ MATERIALES ============================================ -->
+      <section class="view" id="view-materiales">
+        <span class="view-eyebrow">Biblioteca</span>
+        <h1 class="view-title">Materiales</h1>
+        <p class="view-sub">Clases, masterclasses y recursos descargables, curados según tu ciclo y diagnóstico.</p>
+        <div class="card placeholder-card">
+          <p>Vista en construcción para este prototipo — su alcance funcional está definido en RF-017 a RF-021 del APR.</p>
+        </div>
+      </section>
+
+      <!-- ============================================ ACOMPAÑAMIENTO ============================================ -->
+      <section class="view" id="view-acompanamiento">
+        <span class="view-eyebrow">Mentoría</span>
+        <h1 class="view-title">Acompañamiento</h1>
+        <p class="view-sub">Sesiones, videollamadas y documentos compartidos con tu facilitadora.</p>
+        <div class="card placeholder-card">
+          <p>Vista en construcción para este prototipo — su alcance funcional está definido en RF-026 a RF-030 del APR.</p>
+        </div>
+      </section>
+
+      <!-- ============================================ COMUNIDAD ============================================ -->
+      <section class="view" id="view-comunidad">
+        <span class="view-eyebrow">Co-sostenimiento</span>
+        <h1 class="view-title">Comunidad</h1>
+        <p class="view-sub">Espacio de publicaciones, encuentros y aprendizaje colectivo — no otro canal de productividad.</p>
+        <div class="card placeholder-card">
+          <p>Vista en construcción para este prototipo — su alcance funcional está definido en RF-022 a RF-025 del APR.</p>
+        </div>
+      </section>
+
+      <!-- ============================================ NK INTELLIGENCE ============================================ -->
+      <section class="view" id="view-nki">
+        <span class="view-eyebrow">Recopilar → estructurar → relacionar → detectar → sugerir → aprender</span>
+        <h1 class="view-title">Núcleo Kokón Intelligence</h1>
+        <p class="view-sub">La IA amplifica el acompañamiento; no sustituye el criterio de la facilitadora ni de la usuaria.</p>
+
+        <div class="card">
+          <div class="card-head">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <span>Patrón detectado</span>
+          </div>
+          <p style="font-size:13.5px;color:var(--mid);">En las últimas 2 semanas, tus tareas de mayor prioridad se completan con más frecuencia los días en que registraste 7+ horas de sueño. La correlación es fuerte en tu Bitácora.</p>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Sugerencia de herramienta</span>
+          </div>
+          <p style="font-size:13.5px;color:var(--mid);">Detectamos dificultad recurrente para iniciar tareas de escritura. Podrías beneficiarte de desbloquear <strong>Pomodoro</strong> como dispositivo experimental de observación.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  // ---- Navegación entre vistas ----
+  const links = document.querySelectorAll('.sidebar-link');
+  const views = document.querySelectorAll('.view');
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+      const target = link.dataset.view;
+      views.forEach(v => v.classList.toggle('active', v.id === 'view-' + target));
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('show');
+      document.querySelector('.content').scrollTo(0, 0);
+    });
+  });
+
+  // ---- Menú móvil ----
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('show');
+  });
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  });
+
+  // ---- Check-in diario ----
+  document.querySelectorAll('.checkin-options').forEach(group => {
+    group.querySelectorAll('.checkin-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('.checkin-opt').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+    });
+  });
+
+  // ---- Hábitos ----
+  document.querySelectorAll('.habit-check').forEach(chk => {
+    chk.addEventListener('click', () => chk.classList.toggle('done'));
+  });
+
+  // ---- Radar de Índice de Sostenibilidad (Maslow Operativo) ----
+  const radarData = [
+    { label: 'Biológico', valor: 42 },
+    { label: 'Seguridad', valor: 58 },
+    { label: 'Vinculación', valor: 66 },
+    { label: 'Operatividad', valor: 35 },
+    { label: 'Autorrealización', valor: 70 },
+  ];
+  const svg = document.getElementById('radarSvg');
+  const cx = 160, cy = 148, R = 100;
+  const n = radarData.length;
+  const angle = i => (Math.PI * 2 * i) / n - Math.PI / 2;
+  const pt = (i, r) => [cx + r * Math.cos(angle(i)), cy + r * Math.sin(angle(i))];
+
+  let svgContent = '';
+  // grillas concéntricas
+  [0.25, 0.5, 0.75, 1].forEach(f => {
+    const pts = radarData.map((_, i) => pt(i, R * f).join(',')).join(' ');
+    svgContent += `<polygon points="${pts}" fill="none" stroke="var(--border)" stroke-width="1"/>`;
+  });
+  // ejes
+  radarData.forEach((_, i) => {
+    const [x, y] = pt(i, R);
+    svgContent += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--border)" stroke-width="1"/>`;
+  });
+  // polígono de datos
+  const dataPts = radarData.map((d, i) => pt(i, (d.valor / 100) * R).join(',')).join(' ');
+  svgContent += `<polygon points="${dataPts}" fill="var(--teal)" fill-opacity="0.32" stroke="var(--teal)" stroke-width="2"/>`;
+  radarData.forEach((d, i) => {
+    const [x, y] = pt(i, (d.valor / 100) * R);
+    svgContent += `<circle cx="${x}" cy="${y}" r="3.5" fill="var(--teal-dark)"/>`;
+  });
+  // etiquetas
+  radarData.forEach((d, i) => {
+    const [x, y] = pt(i, R + 24);
+    svgContent += `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-family="Montserrat, sans-serif" fill="var(--mid)">${d.label}</text>`;
+  });
+  svg.innerHTML = svgContent;
+</script>
+
+</body>
+</html>

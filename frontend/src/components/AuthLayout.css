@@ -1,0 +1,46 @@
+/* ============================================================
+   AuthLayout — login tal cual (docs/referencias/login.html)
+   ============================================================ */
+
+.auth-layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--bg-right);
+}
+
+.auth-form-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Responsivo: tablet/móvil */
+@media (max-width: 900px) {
+  .auth-form-panel {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-layout {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .auth-form-panel {
+    padding: 3rem 1.5rem;
+  }
+
+  body:has(.auth-layout) {
+    overflow-y: auto;
+  }
+}

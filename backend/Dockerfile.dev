@@ -1,0 +1,16 @@
+# Imagen de desarrollo del backend: incluye las herramientas de compilación
+# para que `npm install` funcione también en arquitecturas sin prebuild de bcrypt.
+FROM node:20-slim
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends python3 make g++ tini ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+ENV NODE_ENV=development
+
+EXPOSE 4000
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["npm", "run", "dev"]

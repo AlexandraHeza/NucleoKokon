@@ -1,0 +1,43 @@
+# Dependencias
+node_modules/
+.pnp/
+.pnp.js
+
+# Build
+dist/
+build/
+frontend/dist/
+
+# Entorno — nunca subir secretos
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Prisma
+backend/prisma/*.db
+backend/prisma/*.db-journal
+backend/generated/
+
+# Tests
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor / SO
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# TypeScript ( although we use JS ) — keeps editors happy
+*.tsbuildinfo
